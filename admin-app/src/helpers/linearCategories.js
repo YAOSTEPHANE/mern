@@ -11,10 +11,7 @@ const linearCategories = (categories, options = []) => {
             linearCategories(category.children, options)
         }
     }
-
-
     return options;
-
 }
 
 export default linearCategories;

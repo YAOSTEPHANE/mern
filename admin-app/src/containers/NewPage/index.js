@@ -39,11 +39,10 @@ const NewPage = (props) => {
 
 
     const onCategoryChange = (e) => {
-        const category = categories.find(category => category._id == e.target.value);
+        const category = categories.find(category => category.value == e.target.value);
         setCategoryId(e.target.value);
         setType(category.type);
     }
-
     const handleBannerImages = (e) => {
         console.log(e);
         setBanners([...banners, e.target.files[0]]);
@@ -53,7 +52,6 @@ const NewPage = (props) => {
         console.log(e);
         setProducts([...products, e.target.files[0]]);
     }
-
     const submitPageForm = (e) => {
         //e.target.preventDefault();
         if (title === "") {
@@ -170,7 +168,7 @@ const NewPage = (props) => {
             {
                 renderCreatePageModal()
             }
-            <button onClick={() => setCreateModal(true)}>Créer Page</button>
+            <button onClick={() => setCreateModal(true)}>Créer Page </button>
         </Layout>
     )
 }
