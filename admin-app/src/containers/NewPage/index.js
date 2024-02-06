@@ -44,7 +44,7 @@ const NewPage = (props) => {
     }, [page]);
 
     const onCategoryChange = (e) => {
-        const category = categories.find(category => category._id == e.target.value);
+        const category = categories.find(category => category.value == e.target.value);
         setCategoryId(e.target.value);
         setType(category.type);
     }
@@ -92,7 +92,7 @@ const NewPage = (props) => {
                 <Container>
                     <Row>
                         <Col>
-                            <select
+                            {/*<select
                                 className="form-control"
                                 value={categoryId}
                                 onChange={onCategoryChange}
@@ -103,7 +103,13 @@ const NewPage = (props) => {
                                         <option key={cat._id} value={cat._id}>{cat.name}</option>
                                     )
                                 }
-                            </select>
+                            </select>*/}
+                            <input
+                            type="select"
+                            value={categoryId}
+                            onChange={onCategoryChange}
+                            options={categories}
+                            />
                         </Col>
                     </Row>
                     <Row>
