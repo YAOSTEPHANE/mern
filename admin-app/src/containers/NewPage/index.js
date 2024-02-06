@@ -15,7 +15,6 @@ import { createPage } from '../../actions';
  **/
 
 const NewPage = (props) => {
-
     const [createModal, setCreateModal] = useState(false);
     const [title, setTitle] = useState('');
     const category = useSelector(state => state.category);
@@ -39,7 +38,7 @@ const NewPage = (props) => {
 
 
     const onCategoryChange = (e) => {
-        const category = categories.find(category => category.value == e.target.value);
+        const category = categories.find(category => category._id == e.target.value);
         setCategoryId(e.target.value);
         setType(category.type);
     }
@@ -59,7 +58,7 @@ const NewPage = (props) => {
             setCreateModal(false);
             return;
         }
-        
+
         const form = new FormData();
         form.append('title', title);
         form.append('description', desc);
@@ -73,10 +72,7 @@ const NewPage = (props) => {
         });
 
         dispatch(createPage(form));
-
     }
-
-
     const renderCreatePageModal = () => {
         return (
             <Modal
@@ -161,7 +157,6 @@ const NewPage = (props) => {
             </Modal>
         );
     }
-
 
     return (
         <Layout sidebar>
