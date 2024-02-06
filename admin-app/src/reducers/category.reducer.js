@@ -74,7 +74,7 @@ const categoryReducer = (state = initState, action) => {
         case categoryConstants.ADD_NEW_CATEGORY_SUCCESS:
             const category = action.payload.category;
             const updatedCategories = buildNewCategories(category.parentId, state.categories, category);
-            console.log(updatedCategories);
+            console.log('updated categories', updatedCategories);
             state = {
                 ...state,
                 categories: updatedCategories,
@@ -83,7 +83,9 @@ const categoryReducer = (state = initState, action) => {
             break;
         case categoryConstants.ADD_NEW_CATEGORY_FAILURE:
             state = {
-                ...initState
+                ...initState,
+                loading: false,
+                error: action.payload.error
             }
             break;
         default:

@@ -27,21 +27,28 @@ const NewPage = (props) => {
     const dispatch = useDispatch();
     const page = useSelector(state => state.page);
 
-
     useEffect(() => {
         setCategories(linearCategories(category.categories));
     }, [category]);
 
     useEffect(() => {
         console.log(page);
+        if (!page.loading) {
+            setCreateModal(false);
+            setTitle('');
+            setCategoryId('');
+            setDesc('');
+            setProducts([]);
+            setBanners([]);
+        }
     }, [page]);
-
 
     const onCategoryChange = (e) => {
         const category = categories.find(category => category._id == e.target.value);
         setCategoryId(e.target.value);
         setType(category.type);
     }
+
     const handleBannerImages = (e) => {
         console.log(e);
         setBanners([...banners, e.target.files[0]]);
@@ -74,11 +81,13 @@ const NewPage = (props) => {
         dispatch(createPage(form));
     }
     const renderCreatePageModal = () => {
+
         return (
             <Modal
                 show={createModal}
                 modalTitle={'Créer une nouvelle page'}
-                handleClose={submitPageForm}
+                handleClose={() => setCreateModal(false)}
+                onSubmit={submitPageForm}
             >
                 <Container>
                     <Row>
@@ -161,9 +170,15 @@ const NewPage = (props) => {
     return (
         <Layout sidebar>
             {
-                renderCreatePageModal()
+                page.loading ? 
+                <p>Creation de la page en cours veuillez patientez ... </p>
+                :
+                <>
+                {renderCreatePageModal()}
+                <button onClick={() => setCreateModal(true)}>Créer Page </button>
+                </>
             }
-            <button onClick={() => setCreateModal(true)}>Créer Page </button>
+            
         </Layout>
     )
 }

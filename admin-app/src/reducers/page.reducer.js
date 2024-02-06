@@ -1,6 +1,6 @@
 const { pageConstants } = require("../actions/constants")
 const initState = {
-    Error : null,
+    error : null,
     loading: false,
     page: {}
 }

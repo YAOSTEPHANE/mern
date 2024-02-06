@@ -40,7 +40,11 @@ const Category = (props) => {
     const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
     const dispatch = useDispatch();
 
-
+    useEffect(() => {
+        if (!category.loading) {
+            setShow(false);
+        }
+    }, [category.loading]);
 
 
 
@@ -48,10 +52,10 @@ const Category = (props) => {
 
         const form = new FormData();
 
-        //if (categoryName === "") {
-        //alert("Inserer un Nom");
-        //return;
-        //}
+        if (categoryName === "") {
+            alert('Ajouter nom de la Categorie')
+            return;
+        }
 
         form.append('name', categoryName);
         form.append('parentId', parentCategoryId);
@@ -124,10 +128,12 @@ const Category = (props) => {
 
     const handleCategoryInput = (key, value, index, type) => {
         if (type == "checked") {
-            const updatedCheckedArray = checkedArray.map((item, _index) => index == _index ? { ...item, [key]: value } : item);
+            const updatedCheckedArray = checkedArray.map((item, _index) =>
+                index == _index ? { ...item, [key]: value } : item);
             setCheckedArray(updatedCheckedArray);
         } else if (type == "expanded") {
-            const updatedExpandedArray = expandedArray.map((item, _index) => index == _index ? { ...item, [key]: value } : item);
+            const updatedExpandedArray = expandedArray.map((item, _index) =>
+                index == _index ? { ...item, [key]: value } : item);
             setExpandedArray(updatedExpandedArray);
         }
     }
@@ -149,7 +155,7 @@ const Category = (props) => {
         });
 
         dispatch(updateCategories(form))
-        setUpdateCategoryModal(false);
+        
     }
 
     const deleteCategory = () => {
@@ -216,12 +222,12 @@ const Category = (props) => {
                             <h3>Categorie</h3>
                             <div className="actionBtnContainer">
                                 <span>Actions: </span>
-                                <button onClick={handleShow}><IoIosAdd /> 
-                                <span>Ajouter</span></button>
+                                <button onClick={handleShow}><IoIosAdd />
+                                    <span>Ajouter</span></button>
                                 <button onClick={deleteCategory}><IoIosTrash
                                 /><span>Supprimer</span></button>
-                                <button onClick={updateCategory}><IoIosCloudUpload /> 
-                                <span>Modifier</span></button>
+                                <button onClick={updateCategory}><IoIosCloudUpload />
+                                    <span>Modifier</span></button>
                             </div>
 
                         </div>
@@ -248,7 +254,8 @@ const Category = (props) => {
             </Container>
             <AddCategoryModal
                 show={show}
-                handleClose={handleClose}
+                handleClose={() => setShow(false)}
+                onSubmit={handleClose}
                 modalTitle={'Ajouté Nouvelle Categorie'}
                 categoryName={categoryName}
                 setCategoryName={setCategoryName}
@@ -259,7 +266,8 @@ const Category = (props) => {
             />
             <UpdateCategoriesModal
                 show={updateCategoryModal}
-                handleClose={updateCategoriesForm}
+                handleClose={() => setUpdateCategoryModal(false)}
+                onSubmit={updateCategoriesForm}
                 modalTitle={'Mise à Jour des Categories'}
                 size="lg"
                 expandedArray={expandedArray}
