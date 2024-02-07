@@ -104,11 +104,12 @@ const NewPage = (props) => {
                                     )
                                 }
                             </select>*/}
-                            <input
+                            <Input
                             type="select"
                             value={categoryId}
                             onChange={onCategoryChange}
                             options={categories}
+                            placeholder={'Selectionner la Categorie'}
                             />
                         </Col>
                     </Row>

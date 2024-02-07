@@ -10,11 +10,8 @@ const Input = (props) => {
         case 'select':
             input = <Form.Group className="mb-3" >
                 {props.label && <Form.Label>{props.label}</Form.Label>}
-                <select className='form-control form-control-sm' 
-                value={props.value} 
-                onChange={props.onChange}
-                >
-                    <option>{props.placeholder}</option>
+                <select className='form-control form-control-sm' value={props.value} onChange={props.onChange}>
+                    <option value="">{props.placeholder}</option>
                     {
                         props.options.length > 0 ? 
                         props.options.map((option, index) => 
