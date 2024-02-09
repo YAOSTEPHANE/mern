@@ -9,4 +9,5 @@ export const categoryConstants = {
 
 export const productConstants = {
     GET_PRODUCTS_BY_SLUG: 'GET_PRODUCTS_BY_SLUG',
+    GET_PRODUCT_PAGE:
 }
