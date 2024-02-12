@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { productConstants } from "../actions/constants"
 const initState = {
     products: [],
@@ -29,7 +30,6 @@ export default (state = initState, action) => {
         case productConstants.GET_PRODUCT_PAGE_REQUEST:
             state = {
                 ...state,
-                page: action.payload.page,
                 pageRequest: true
             }
             break;
