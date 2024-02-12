@@ -1,28 +1,55 @@
 import { productConstants } from "../actions/constants"
 const initState = {
     products: [],
-    productsByPrice:{
-        under5k:[],
-        under10k:[],
-        under15k:[],
-        under20k:[],
-        under30k:[],
-    }
+    productsByPrice: {
+        under5k: [],
+        under10k: [],
+        under15k: [],
+        under20k: [],
+        under30k: [],
+    },
+    pageRequest: false,
+    page: {},
+    error: null
 }
 
 
 
 export default (state = initState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case productConstants.GET_PRODUCTS_BY_SLUG:
             state = {
                 ...state,
                 products: action.payload.products,
-                productsByPrice:{
+                productsByPrice: {
                     ...action.payload.productsByPrice
                 }
             }
             break;
+        case productConstants.GET_PRODUCT_PAGE_REQUEST:
+            state = {
+                ...state,
+                page: action.payload.page,
+                pageRequest: true
+            }
+            break;
+            case productConstants.GET_PRODUCT_PAGE_SUCCESS:
+            state = {
+                ...state,
+                page: action.payload.page,
+                pageRequest: false
+            }
+            break;
+            case productConstants.GET_PRODUCT_PAGE_FAILURE:
+            state = {
+                ...state,
+                pageRequest: false,
+                error: action.payload.error
+            }
+            break;
+            default:
+            break;
+            
     }
     return state;
 }
