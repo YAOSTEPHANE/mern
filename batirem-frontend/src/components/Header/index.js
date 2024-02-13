@@ -9,6 +9,8 @@ import {
   MaterialButton,
   DropdownMenu
 } from '../MaterialUI';
+import { useDispatch } from 'react-redux';
+import { login } from '../../actions';
 
 /**
 * @author
@@ -20,6 +22,12 @@ const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+
+
+  const userLogin = () => {
+    dispatch(login({email, password}));
+  }
   
 
   return (
@@ -39,7 +47,7 @@ const Header = (props) => {
 
                 <MaterialInput 
                   type="text"
-                  label="Entrer Email/Entrer Numero Telephone"
+                  label="Entrer Email/Numero Telephone"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -49,12 +57,27 @@ const Header = (props) => {
                   label="Mot de Passe"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  rightElement={<a href="#">Oublié ?</a>}
+                  //rightElement={<a href="#">Oublié ?</a>}
                 />
                 <MaterialButton 
                   title="Se Connecter"
                   bgColor="#fb641b"
                   textColor="#ffffff"
+                  style={{
+                    margin: '40px 0 20px 0'
+                  }}
+                  onClick={userLogin}
+                />
+
+                <p>Ou</p>
+
+                <MaterialButton 
+                  title="Demande OTP"
+                  bgColor="#ffffff"
+                  textColor="#2874f0"
+                  style={{
+                    margin: '20px 0'
+                  }}
                 />
 
               
