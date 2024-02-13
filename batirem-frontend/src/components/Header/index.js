@@ -31,7 +31,7 @@ const Header = (props) => {
         <div className="authContainer">
           <div className="row">
             <div className="leftspace">
-              <h2>Connectez-vous</h2>
+              <h2>Se Connecter</h2>
               <p>Accédez à vos commandes, à votre liste de souhaits et à vos recommandations</p>
             </div>
             <div className="rightspace">
@@ -49,10 +49,10 @@ const Header = (props) => {
                   label="Mot de Passe"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  rightElement={<a href="#">Forgot?</a>}
+                  rightElement={<a href="#">Oublié ?</a>}
                 />
                 <MaterialButton 
-                  title="Login"
+                  title="Se Connecter"
                   bgColor="#fb641b"
                   textColor="#ffffff"
                 />
@@ -84,7 +84,7 @@ const Header = (props) => {
           <div className="searchInputContainer">
             <input
               className="searchInput"
-              placeholder={'search for products, brands and more'}
+              placeholder={'Rechercher des produits, des marques et plus encore'}
             />
             <div className="searchIconContainer">
               <IoIosSearch style={{
@@ -100,12 +100,12 @@ const Header = (props) => {
           <DropdownMenu
             menu={
               <a className="loginButton" onClick={() => setLoginModal(true)}>
-                Connectez-vous
+                Se Connecter
               </a>
             }
             menus={[
               { label: 'Mon profil', href: '', icon: null },
-              { label: 'Flipkart Plus Zone', href: '', icon: null },
+              { label: 'Batirem Plus Zone', href: '', icon: null },
               { label: 'Commandes', href: '', icon: null },
               { label: 'Liste de souhaits', href: '', icon: null },
               { label: 'Récompenses', href: '', icon: null },
