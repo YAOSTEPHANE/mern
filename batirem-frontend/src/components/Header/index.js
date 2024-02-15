@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import flipkartLogo from '../../images/logo/flipkart.png';
 import goldenStar from '../../images/logo/golden-star.png';
 import { IoIosArrowDown, IoIosCart, IoIosSearch } from 'react-icons/io';
-import { 
+import {
   Modal,
   MaterialInput,
   MaterialButton,
   DropdownMenu
 } from '../MaterialUI';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../actions';
 
 /**
@@ -22,17 +22,73 @@ const Header = (props) => {
   const [loginModal, setLoginModal] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const auth = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
 
   const userLogin = () => {
-    dispatch(login({email, password}));
+    dispatch(login({ email, password }));
   }
-  
+
+  useEffect(() => {
+    //if(auth.authenticate){
+    //}
+  }, [auth.authenticate]);
+
+  const renderLoggedInMenu = () => {
+    return (
+      <DropdownMenu
+        menu={
+          <a className="fullName">
+            {auth.user.fullName}
+          </a>
+        }
+        menus={[
+          { label: 'Mon profil', href: '', icon: null },
+          { label: 'Zone Supercoin', href: '', icon: null },
+          { label: 'Batirem Plus Zone', href: '', icon: null },
+          { label: 'Commandes', href: '', icon: null },
+          { label: 'Liste de souhaits', href: '', icon: null },
+          { label: 'Coupons', href: '', icon: null },
+          { label: 'Récompenses', href: '', icon: null },
+          { label: 'Notifications', href: '', icon: null },
+          { label: 'Cartes-cadeaux', href: '', icon: null },
+          { label: 'Deconnecter-vous', href: '', icon: null },
+        ]}
+      />
+    );
+  }
+
+  const renderNonLoggedInMenu = () => {
+    return (
+      <DropdownMenu
+        menu={
+          <a className="loginButton" onClick={() => setLoginModal(true)}>
+            Se Connecter
+          </a>
+        }
+        menus={[
+          { label: 'Mon profil', href: '', icon: null },
+          { label: 'Batirem Plus Zone', href: '', icon: null },
+          { label: 'Commandes', href: '', icon: null },
+          { label: 'Liste de souhaits', href: '', icon: null },
+          { label: 'Récompenses', href: '', icon: null },
+          { label: 'Cartes-cadeaux', href: '', icon: null },
+        ]}
+        firstMenu={
+          <div className="firstmenu">
+            <span>Nouveau client?</span>
+            <a style={{ color: '#2874f0' }}>S’enregistrer</a>
+          </div>
+        }
+      />
+    );
+  }
+
 
   return (
     <div className="header">
-      <Modal 
+      <Modal
         visible={loginModal}
         onClose={() => setLoginModal(false)}
       >
@@ -43,51 +99,51 @@ const Header = (props) => {
               <p>Accédez à vos commandes, à votre liste de souhaits et à vos recommandations</p>
             </div>
             <div className="rightspace">
-          
 
-                <MaterialInput 
-                  type="text"
-                  label="Entrer Email/Numero Telephone"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
 
-                <MaterialInput 
-                  type="password"
-                  label="Mot de Passe"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  //rightElement={<a href="#">Oublié ?</a>}
-                />
-                <MaterialButton 
-                  title="Se Connecter"
-                  bgColor="#fb641b"
-                  textColor="#ffffff"
-                  style={{
-                    margin: '40px 0 20px 0'
-                  }}
-                  onClick={userLogin}
-                />
+              <MaterialInput
+                type="text"
+                label="Entrer Email/Numero Telephone"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-                <p>Ou</p>
+              <MaterialInput
+                type="password"
+                label="Mot de Passe"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              //rightElement={<a href="#">Oublié ?</a>}
+              />
+              <MaterialButton
+                title="Se Connecter"
+                bgColor="#fb641b"
+                textColor="#ffffff"
+                style={{
+                  margin: '40px 0 20px 0'
+                }}
+                onClick={userLogin}
+              />
 
-                <MaterialButton 
-                  title="Demande OTP"
-                  bgColor="#ffffff"
-                  textColor="#2874f0"
-                  style={{
-                    margin: '20px 0'
-                  }}
-                />
+              <p>Ou</p>
 
-              
+              <MaterialButton
+                title="Demande OTP"
+                bgColor="#ffffff"
+                textColor="#2874f0"
+                style={{
+                  margin: '20px 0'
+                }}
+              />
+
+
 
             </div>
           </div>
         </div>
       </Modal>
       <div className="subHeader">
-      {/* logo start */}
+        {/* logo start */}
         <div className="logo">
           <a href="">
             <img src={flipkartLogo} className="logoimage" alt="" />
@@ -120,27 +176,11 @@ const Header = (props) => {
         {/* search component end here */}
         {/* right menu start */}
         <div className="rightMenu">
-          <DropdownMenu
-            menu={
-              <a className="loginButton" onClick={() => setLoginModal(true)}>
-                Se Connecter
-              </a>
-            }
-            menus={[
-              { label: 'Mon profil', href: '', icon: null },
-              { label: 'Batirem Plus Zone', href: '', icon: null },
-              { label: 'Commandes', href: '', icon: null },
-              { label: 'Liste de souhaits', href: '', icon: null },
-              { label: 'Récompenses', href: '', icon: null },
-              { label: 'Cartes-cadeaux', href: '', icon: null },
-            ]}
-            firstMenu={
-              <div className="firstmenu">
-                <span>Nouveau client?</span>
-                <a style={{ color: '#2874f0' }}>S’enregistrer</a>
-              </div>
-            }
-          />
+          {
+            auth.authenticate ?
+              renderLoggedInMenu() : renderNonLoggedInMenu()
+          }
+
           <DropdownMenu
             menu={
               <a className="more">
