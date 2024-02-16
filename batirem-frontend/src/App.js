@@ -6,6 +6,7 @@ import ProductListPage from './containers/ProductListPage';
 import { useDispatch, useSelector } from 'react-redux';
 import { isUserLoggedIn } from './actions';
 import ProductDetailsPage from './containers/ProductDetailsPage';
+import CartPage from './containers/CartPage';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" component={HomePage } exact />
+          <Route path="/cart" component={CartPage} />
           <Route path="/:productSlug/:productId/p" component={ProductDetailsPage }/>
           <Route path="/:slug" component={ProductListPage }/>
           
