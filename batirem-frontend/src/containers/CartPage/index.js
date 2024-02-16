@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Layout from '../../components/Layout';
 import Card from '../../components/UI/Card';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,19 @@ import './style.css';
 export const CartPage = (props) => {
 
     const cart = useSelector(state => state.cart);
-    const cartItems = cart.cartItems;
+    //const cartItems = cart.cartItems;
+    const [cartItems, setCartItems] = useState(cart.cartItems);
+
+    useEffect(() => {
+        setCartItems(cart.cartItems);
+    }, [cart.cartItems]);
+
+    const onQuantityIncrement = (_id, qty) => {
+        console.log({_id, qty})
+    }
+    const onQuantityDecrement = (_id, qty) => {
+
+    }
 
     return (
         <Layout>
@@ -26,6 +38,8 @@ export const CartPage = (props) => {
                         <CartItem 
                         key={index}
                         cartItem={cartItems[key]}
+                        onQuantityInc={onQuantityIncrement}
+                        onQuantityDec={onQuantityDecrement}
                         />
 
                         )

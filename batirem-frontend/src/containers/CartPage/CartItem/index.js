@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { generatePublicUrl } from '../../../urlConfig';
 import './style.css'
 
@@ -8,10 +8,22 @@ import './style.css'
 **/
 
 export const CartItem = (props) => {
+    const [qty, setQty] = useState(props.cartItem.qty);
 
     const {
-        _id, name, price, qty, img
+        _id, name, price, img
     } = props.cartItem;
+
+
+    const onQuantityIncrement = () => {
+        setQty(qty + 1);
+        props.onQuantityInc(_id, qty + 1);
+        }
+
+        const onQuantityDecrement = () => {
+            
+        }
+
     return (
         <div className='cartItemContainer'>
             <div className='flexRow'>
@@ -35,7 +47,7 @@ export const CartItem = (props) => {
                 <div className='quantityControl'>
                     <button>-</button>
                     <input value={qty} readOnly />
-                    <button>+</button>
+                    <button onClick={onQuantityIncrement}>+</button>
                 </div>
                 <button className='cartActionBtn'>Sauvegarder</button>
                 <button className='cartActionBtn'>Supprimé</button>
