@@ -1,8 +1,8 @@
 import {cartConstants} from '../actions/constants';
 
 
-const initSatate = {
-    products: {
+const initState = {
+    cartItems: {
         // '1': {
         //     _id: 1,
         //     name: 'Product 1',
@@ -14,7 +14,7 @@ const initSatate = {
     
 };
 
-export default (state = initSatate, action) => {
+export default (state = initState, action) => {
     switch(action.type){
         case cartConstants.ADD_TO_CART:
             state = {
