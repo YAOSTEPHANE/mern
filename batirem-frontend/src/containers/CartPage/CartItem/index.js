@@ -21,7 +21,9 @@ export const CartItem = (props) => {
         }
 
         const onQuantityDecrement = () => {
-            
+            if (qty <= 1) return;
+            setQty(qty - 1);
+            props.onQuantityDec(_id, qty -1 );
         }
 
     return (
@@ -35,7 +37,7 @@ export const CartItem = (props) => {
                         <p>{name}</p>
                         <p>{price} FCFA</p>
                     </div>
-                    <div>Livrer entre 2 - 3 jours</div>
+                    <div>Livrer entre 1 - 3 jours</div>
                 </div>
             </div>
             <div
@@ -45,7 +47,7 @@ export const CartItem = (props) => {
                 }}>
                 {/* quantity control */}
                 <div className='quantityControl'>
-                    <button>-</button>
+                    <button onClick={onQuantityDecrement}>-</button>
                     <input value={qty} readOnly />
                     <button onClick={onQuantityIncrement}>+</button>
                 </div>
