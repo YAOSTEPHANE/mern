@@ -51,10 +51,10 @@ export const addToCart = (product, newQty = 1) => {
             console.log(payload);
             const res = await axios.post(`/user/cart/addtocart`, payload);
             console.log(res);
-            if(res.status === 201) {
+            if (res.status === 201) {
                 dispatch(getCartItems());
             }
-        }else{
+        } else {
             localStorage.setItem('cart', JSON.stringify(cartItems));
         }
 
@@ -62,20 +62,48 @@ export const addToCart = (product, newQty = 1) => {
 
         dispatch({
             type: cartConstants.ADD_TO_CART_SUCCESS,
-            payload: {cartItems}
-        })
+            payload: { cartItems }
+        });
     }
 }
 
 export const updateCart = () => {
     return async dispatch => {
-        const cartItems = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : null;
+        const { auth } = store.getState();
+        let cartItems = localStorage.getItem('cart') ?
+            JSON.parse(localStorage.getItem('cart')) : null;
 
-        if (cartItems) {
-            dispatch({
-                type: cartConstants.ADD_TO_CART,
-                payload: { cartItems }
-            });
+        console.log('uppppppppp')
+
+        if (auth.authenticate) {
+            localStorage.removeItem('cart');
+            if (cartItems) {
+                const payload = {
+                    cartItems: Object.keys(cartItems).map((key, index) => {
+                        return {
+                            quantity: cartItems[key].qty,
+                            product: cartItems[key]._id
+                        }
+                    })
+                };
+                if (Object.keys(cartItems).length > 0) {
+                    const res = await axios.post(`/user/cart/addtocart`, payload);
+                    if (res.status === 201) {
+                        dispatch(getCartItems());
+                    }
+                }
+            }
+        } else {
+            if (cartItems) {
+                dispatch({
+                    type: cartConstants.ADD_TO_CART_SUCCESS,
+                    payload: { cartItems }
+                });
+            }
         }
+
     }
+}
+export {
+    getCartItems
 }
