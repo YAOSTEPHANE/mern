@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// C
 const addressSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -54,7 +53,7 @@ const addressSchema = new mongoose.Schema({
   },
 });
 
-// B
+
 const userAddressSchema = new mongoose.Schema(
   {
     user: {
@@ -67,5 +66,4 @@ const userAddressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mongoose.model("Address", addressSchema);
 module.exports = mongoose.model("UserAddress", userAddressSchema);

@@ -29,12 +29,12 @@ const Header = (props) => {
   const userLogin = () => {
     dispatch(login({ email, password }));
   }
-  const logout = () =>{
+  const logout = () => {
     dispatch(signout());
   }
 
   useEffect(() => {
-    if(auth.authenticate){
+    if (auth.authenticate) {
       setLoginModal(false)
     }
   }, [auth.authenticate]);
@@ -104,7 +104,7 @@ const Header = (props) => {
             </div>
             <div className="rightspace">
 
-
+             <div className="loginInputContainer">
               <MaterialInput
                 type="text"
                 label="Entrer Email/Numero Telephone"
@@ -129,7 +129,7 @@ const Header = (props) => {
                 onClick={userLogin}
               />
 
-              <p>Ou</p>
+              <p style={{textAlign: 'center'}}>Ou</p>
 
               <MaterialButton
                 title="Demande OTP"
@@ -139,7 +139,7 @@ const Header = (props) => {
                   margin: '20px 0'
                 }}
               />
-
+              </div>
 
 
             </div>
