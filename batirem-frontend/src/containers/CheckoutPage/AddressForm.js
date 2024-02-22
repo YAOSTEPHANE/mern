@@ -39,8 +39,8 @@ const AddressForm = (props) => {
                 landmark,
                 alternatePhone,
                 addressType,
-            }
-        }
+            },
+        };
         console.log(payload);
         dispatch(addAddress(payload));
     }
@@ -51,7 +51,7 @@ const AddressForm = (props) => {
             <div className={`checkoutHeader`}>
                 <div>
                     <span className="stepNumber">+</span>
-                    <span className="stepTitle">Ajouter une nouvelle adresse</span>
+                    <span className="stepTitle">AJOUTER NOUVELLE ADDRESSE</span>
                 </div>
             </div>
             <div style={{
@@ -69,7 +69,7 @@ const AddressForm = (props) => {
                     </div>
                     <div style={inputContainer}>
                         <MaterialInput
-                            label="10-digit Numero de telephone"
+                            label="Numero de telephone"
                             value={mobileNumber}
                             onChange={(e) => setName(e.target.value)}
                         />
@@ -149,5 +149,4 @@ const AddressForm = (props) => {
 
 }
 
-
-            export default AddressForm;
+export default AddressForm;
