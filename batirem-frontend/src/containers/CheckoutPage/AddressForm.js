@@ -21,13 +21,15 @@ const AddressForm = (props) => {
     const [alternatePhone, setAlternatePhone] = useState('');
     const [addressType, setAddressType] = useState('');
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
+    const [submitFlag, setSubmitFlag] = useState(false);
 
     const inputContainer = {
         width: "100%",
         marginRight: 10
     };
 
-    const onAddressSubmit = (e) => {
+    const onAddressSubmit = () => {
         const payload = {
             address: {
                 name,
@@ -43,10 +45,126 @@ const AddressForm = (props) => {
         };
         console.log(payload);
         dispatch(addAddress(payload));
+        setSubmitFlag(true);
     }
 
+    useEffect(() => {
+        console.log("addressCount", user.address);
+        if (submitFlag) {
+            console.log("Où sommes-nous", user);
+            const address = user.address.slice(user.address.length - 1)[0];
+            props.onSubmitForm(address);
+        }
+    }, [user.address]);
+
+    const renderAddressForm = () => {
+        return (
+            <>
+                <div className="flexRow">
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Nom"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Numéro de téléphone à 10 chiffres"
+                            value={mobileNumber}
+                            onChange={(e) => setMobileNumber(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="flexRow">
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Commune"
+                            value={locality}
+                            onChange={(e) => setLocality(e.target.value)}
+                        />
+                    </div>
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Quartier"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="flexRow">
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Sous-quartier"
+                            value={cityDistrictTown}
+                            onChange={(e) => setCityDistrictTown(e.target.value)}
+                        />
+                    </div>
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Pays"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="flexRow">
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Point de repère"
+                            value={landmark}
+                            onChange={(e) => setLandmark(e.target.value)}
+                        />
+                    </div>
+                    <div style={inputContainer}>
+                        <MaterialInput
+                            label="Numéro de téléphone alternatif (Optionnel)"
+                            value={alternatePhone}
+                            onChange={(e) => setAlternatePhone(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label>Type d'adresse</label>
+                    <div className="flexRow">
+                        <div>
+                            <input
+                                type="radio"
+                                onClick={() => setAddressType('home')}
+                                name='addressType'
+                                value='home'
+                            />
+                            <span>Domicile</span>
+                            <input
+                                type="radio"
+                                onClick={() => setAddressType('work')}
+                                name='addressType'
+                                value='work'
+                            />
+                            <span>Travail</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="flexRow">
+                    <MaterialButton
+                        title="Enregistrer et livrer ici"
+                        onClick={onAddressSubmit}
+                        style={{
+                            width: '250px',
+                            margin: '20px 0'
+                        }}
+                    />
+                </div>
+            </>
+        );
+    };
+
+    if (props.withoutLayout) {
+        return <div>{renderAddressForm()}</div>;
+    }
 
     return (
+
         <div className="checkoutStep" style={{ background: '#f5faff' }}>
             <div className={`checkoutHeader`}>
                 <div>
@@ -59,94 +177,11 @@ const AddressForm = (props) => {
                 paddingBottom: '20px',
                 boxSizing: 'border-box'
             }}>
-                <div className="flexRow">
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Nom"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Numero de telephone"
-                            value={mobileNumber}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="flexRow">
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Commune"
-                            value={locality}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Quartier"
-                            value={address}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="flexRow">
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Sous-quartier"
-                            value={cityDistrictTown}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Pays"
-                            value={state}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="flexRow">
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Point de repere"
-                            value={landmark}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                    <div style={inputContainer}>
-                        <MaterialInput
-                            label="Numero de telephone alternatif"
-                            value={alternatePhone}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label>Adresse Type</label>
-                    <div>
-                        <input type="radio" onClick={() => setAddressType('home')} name='addressType' value='home' />
-                        <span>Domicile</span>
-                        <input type="radio" onClick={() => setAddressType('work')} name='addressType' value='work' />
-                        <span>Travail</span>
-                    </div>
-                </div>
+                {renderAddressForm()}
             </div>
-            <div className="flexRow">
-                <MaterialButton 
-                title="ENREGISTRER ET LIVRER ICI"
-                onClick={onAddressSubmit}
-                style={{
-                    width: '250px',
-                    margin: '20px 0'
-                }}
-                />
-            </div>
-            </div>
+        </div>
 
-            );
-
+    );
 }
 
 export default AddressForm;

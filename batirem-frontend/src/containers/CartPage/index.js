@@ -6,6 +6,7 @@ import CartItem from './CartItem';
 import './style.css';
 import { addToCart, getCartItems } from '../../actions';
 import { MaterialButton } from '../../components/MaterialUI';
+import PriceDetails from '../../components/PriceDetails';
 
 
 
@@ -25,11 +26,12 @@ export const CartPage = (props) => {
     useEffect(() => {
         setCartItems(cart.cartItems);
     }, [cart.cartItems]);
+
     useEffect(() => {
         if (auth.authenticate) {
             dispatch(getCartItems());
         }
-    }, [auth.authenticate]);
+    }, [auth.authenticate, dispatch]);
 
     const onQuantityIncrement = (_id, qty) => {
         //console.log({_id, qty});
@@ -76,13 +78,20 @@ export const CartPage = (props) => {
                         </div>
                     </div>
                 </Card>
-                <Card headerLeft='Prix Total' style={{ width: '380px' }}>
-                </Card>
+                <PriceDetails 
+                totalItem={Object.keys(cart.cartItems).reduce(function(qty, key) {
+                return qty + cart.cartItems[key].qty;
+                }, 0)}
+                totalPrice={Object.keys(cart.cartItems).reduce((totalPrice, keys) => {
+                    const {price, qty} = cart.cartItems[keys];
+                return totalPrice + price * qty;
+                }, 0)}
+                 />
 
             </div>
         </Layout>
-    )
+    );
 
-}
+};
 
 export default CartPage;
