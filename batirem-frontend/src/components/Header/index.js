@@ -201,7 +201,7 @@ const Header = (props) => {
             ]}
           />
           <div>
-            <a className="cart">
+            <a href={`/cart`} className="cart">
               <IoIosCart />
               <span style={{ margin: '0 10px' }}>Panier</span>
             </a>

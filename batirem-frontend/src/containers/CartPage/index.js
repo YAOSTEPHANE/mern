@@ -43,6 +43,23 @@ export const CartPage = (props) => {
         dispatch(addToCart({ _id, name, price, img }, -1));
     }
 
+    if(props.onlyCartItems){
+        return (
+            <>
+            {
+                Object.keys(cartItems).map((key, index) => (
+                    <CartItem
+                        key={index}
+                        cartItem={cartItems[key]}
+                        onQuantityInc={onQuantityIncrement}
+                        onQuantityDec={onQuantityDecrement}
+                    />
+
+                ))
+            }
+            </>
+        );
+    }
     return (
         <Layout>
             <div className='cartContainer' style={{ alignItems: 'flex-start' }}>
@@ -50,7 +67,7 @@ export const CartPage = (props) => {
                     style={{ width: 'calc(100% - 400px', overflow: 'hidden' }}
                 >
                     {
-                        Object.keys(cartItems).map((key, index) =>
+                        Object.keys(cartItems).map((key, index) => (
                             <CartItem
                                 key={index}
                                 cartItem={cartItems[key]}
@@ -58,7 +75,7 @@ export const CartPage = (props) => {
                                 onQuantityDec={onQuantityDecrement}
                             />
 
-                        )
+                        ))
                     }
 
                     <div style={{

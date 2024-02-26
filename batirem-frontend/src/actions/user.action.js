@@ -10,7 +10,7 @@ export const getAddress = () => {
             });
             if (res.status === 200) {
                 const {
-                    userAddress: {address}
+                    userAddress: {address},
                 } = res.data;
                 dispatch({
                     type: userConstants.GET_USER_ADDRESS_SUCCESS,

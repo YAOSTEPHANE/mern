@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './style.css';
+import "./style.css";
 
 /**
 * @author 
@@ -13,7 +13,7 @@ const Modal = (props) => {
     return (
         <>
             <div className="modalFixedBg">
-                <div style={{ position: 'relative' }}>
+                <div style={{ position: "relative" }}>
                     <div className="modalClose" onClick={props.onClose}>X</div>
                     <div className="modalContainer">
                         {props.children}
@@ -21,8 +21,8 @@ const Modal = (props) => {
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
 const MaterialInput = (props) => {
     const [focus, setFocus] = useState(false);
@@ -41,11 +41,11 @@ const MaterialInput = (props) => {
                     value={props.value}
                     onChange={props.onChange}
                     onFocus={(e) => {
-                        setFocus(true)
+                        setFocus(true);
                     }}
                     onBlur={(e) => {
                         if(e.target.value === ""){
-                            setFocus(false)
+                            setFocus(false);
                         }
                     }} />
                 {
