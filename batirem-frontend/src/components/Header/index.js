@@ -51,13 +51,14 @@ const Header = (props) => {
           { label: 'Mon profil', href: '', icon: null },
           { label: 'Zone Supercoin', href: '', icon: null },
           { label: 'Batirem Plus Zone', href: '', icon: null },
-          { label: 'Commandes', href: '', icon: null },
+          { label: 'Commandes', href: `/account/orders`, icon: null },
           { label: 'Liste de souhaits', href: '', icon: null },
+          { label: "Mes Discussions", href: "", icon: null },
           { label: 'Coupons', href: '', icon: null },
           { label: 'Récompenses', href: '', icon: null },
           { label: 'Notifications', href: '', icon: null },
           { label: 'Cartes-cadeaux', href: '', icon: null },
-          { label: 'Deconnecter-vous', href: '', icon: null, onClick: logout },
+          { label: 'Se Deconnecter', href: '', icon: null, onClick: logout },
         ]}
       />
     );
@@ -74,7 +75,10 @@ const Header = (props) => {
         menus={[
           { label: 'Mon profil', href: '', icon: null },
           { label: 'Batirem Plus Zone', href: '', icon: null },
-          { label: 'Commandes', href: '', icon: null },
+          { label: 'Commandes', href: `/account/orders`, icon: null, onClick: () => {
+            !auth.authenticate && setLoginModal(true);
+          },
+           },
           { label: 'Liste de souhaits', href: '', icon: null },
           { label: 'Récompenses', href: '', icon: null },
           { label: 'Cartes-cadeaux', href: '', icon: null },
@@ -104,41 +108,41 @@ const Header = (props) => {
             </div>
             <div className="rightspace">
 
-             <div className="loginInputContainer">
-              <MaterialInput
-                type="text"
-                label="Entrer Email/Numero Telephone"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <div className="loginInputContainer">
+                <MaterialInput
+                  type="text"
+                  label="Entrer Email/Numero Telephone"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
 
-              <MaterialInput
-                type="password"
-                label="Mot de Passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              //rightElement={<a href="#">Oublié ?</a>}
-              />
-              <MaterialButton
-                title="Se Connecter"
-                bgColor="#fb641b"
-                textColor="#ffffff"
-                style={{
-                  margin: '40px 0 20px 0'
-                }}
-                onClick={userLogin}
-              />
+                <MaterialInput
+                  type="password"
+                  label="Mot de Passe"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                //rightElement={<a href="#">Oublié ?</a>}
+                />
+                <MaterialButton
+                  title="Se Connecter"
+                  bgColor="#fb641b"
+                  textColor="#ffffff"
+                  style={{
+                    margin: '40px 0 20px 0'
+                  }}
+                  onClick={userLogin}
+                />
 
-              <p style={{textAlign: 'center'}}>Ou</p>
+                <p style={{ textAlign: 'center' }}>Ou</p>
 
-              <MaterialButton
-                title="Demande OTP"
-                bgColor="#ffffff"
-                textColor="#2874f0"
-                style={{
-                  margin: '20px 0'
-                }}
-              />
+                <MaterialButton
+                  title="Demande OTP"
+                  bgColor="#ffffff"
+                  textColor="#2874f0"
+                  style={{
+                    margin: '20px 0'
+                  }}
+                />
               </div>
 
 
@@ -153,7 +157,7 @@ const Header = (props) => {
             <img src={flipkartLogo} className="logoimage" alt="" />
           </a>
           <a style={{ marginTop: '-10px' }}>
-            <span className="exploreText">Explore</span>
+            <span className="exploreText">Explorez</span>
             <span className="plusText">Plus</span>
             <img src={goldenStar} className="goldenStar" alt="" />
           </a>
@@ -196,7 +200,7 @@ const Header = (props) => {
               { label: 'Préférence de notification', href: '', icon: null },
               { label: 'Vendre sur Batirem', href: '', icon: null },
               { label: 'Service client 24h/24 et 7j/7', href: '', icon: null },
-              { label: 'Annoncer', href: '', icon: null },
+              { label: 'Annonces', href: '', icon: null },
               { label: 'Telecharger App', href: '', icon: null }
             ]}
           />

@@ -4,6 +4,7 @@ import './style.css';
 import ProductStore from './ProductStore';
 import ProductPage from './ProductPage';
 import getParams from '../../utils/getParams';
+import ClothingAndAccessories from './ClothingAndAccessories';
 
 
 /** 
@@ -21,17 +22,17 @@ const ProductListPage = (props) => {
         let content = null;
         switch (params.type) {
             case 'store':
-                content = <ProductStore {...props} />
+                content = <ProductStore {...props} />;
                 break;
             case 'page':
-                content = <ProductPage {...props} />
+                content = <ProductPage {...props} />;
                 break;
             default:
-                content = null;
+                content = <ClothingAndAccessories {...props} />;
         }
         return content;
 
-    }
+    };
 
 
     return (

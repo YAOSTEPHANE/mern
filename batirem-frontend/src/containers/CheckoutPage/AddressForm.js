@@ -165,14 +165,14 @@ const AddressForm = (props) => {
                         <div>
                             <input
                                 type="radio"
-                                onClick={() => setAddressType('home')}
+                                onClick={() => setAddressType('domicile')}
                                 name='addressType'
                                 value='home'
                             />
                             <span>Domicile</span>
                             <input
                                 type="radio"
-                                onClick={() => setAddressType('work')}
+                                onClick={() => setAddressType('travail')}
                                 name='addressType'
                                 value='work'
                             />

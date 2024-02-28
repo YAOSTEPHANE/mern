@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../components/Layout';
 import Card from '../../components/UI/Card';
-import { getAddress, getCartItems } from '../../actions';
+import { getAddress, getCartItems, addOrder } from '../../actions';
 import { Anchor, MaterialButton, MaterialInput } from "../../components/MaterialUI";
 import AddressForm from './AddressForm';
 import PriceDetails from '../../components/PriceDetails';
@@ -98,6 +98,7 @@ const CheckoutPage = (props) => {
   const [orderSummary, setOrderSummary] = useState(false);
   const [orderConfirmation, setOrderConfirmation] = useState(false);
   const [paymentOption, setPaymentOption] = useState(false);
+  const [confirmOrder, setConfirmOrder] = useState(false);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
@@ -135,6 +136,32 @@ const CheckoutPage = (props) => {
     setPaymentOption(true);
   };
 
+  const onConfirmOrder = () => {
+    const totalAmount = Object.keys(cart.cartItems).reduce(
+      (totalPrice, key) => {
+        const { price, qty } = cart.cartItems[key];
+        return totalPrice + price * qty;
+      },
+      0
+    );
+    const items = Object.keys(cart.cartItems).map((key) => ({
+      productId: key,
+      payablePrice: cart.cartItems[key].price,
+      purchasedQty: cart.cartItems[key].qty,
+    }));
+    const payload = {
+      addressId: selectedAddress._id,
+      totalAmount,
+      items,
+      paymentStatus: "pending",
+      paymentType: "cod",
+    };
+
+    console.log(payload);
+    dispatch(addOrder(payload));
+    setConfirmOrder(true);
+  }
+
   useEffect(() => {
     auth.authenticate && dispatch(getAddress());
     auth.authenticate && dispatch(getCartItems());
@@ -150,6 +177,16 @@ const CheckoutPage = (props) => {
     setAddress(address);
     //user.address.length === 0 && setNewAddress(true);
   }, [user.address]);
+
+  if (confirmOrder) {
+    return (
+      <Layout>
+        <Card>
+          <div>Merci</div>
+        </Card>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -253,7 +290,7 @@ const CheckoutPage = (props) => {
             active={paymentOption}
             body={
               paymentOption && (
-                <div className="stepCompleted">
+                <div>
                   <div className="flexRow" style={{
                     alignItems: "center",
                     padding: "20px",
@@ -261,9 +298,11 @@ const CheckoutPage = (props) => {
                     <input type="radio" name="Options de paiement" value="cod" />
                     <div>Payer à la livraison</div>
                   </div>
-                  <MaterialButton 
-                  title="CONFIRMER LA COMMANDE" style={{ width: "200px", margin: "0 0 20px 20px"}}
-                   />
+                  <MaterialButton
+                    title="CONFIRMER LA COMMANDE"
+                    onClick={onConfirmOrder}
+                    style={{ width: "200px", margin: "0 0 20px 20px" }}
+                  />
                 </div>
               )
             }

@@ -13,7 +13,7 @@ const PriceDetails = (props) => {
             >
                 <div className="flexRow sb" style={{margin: "10px 0"}}>
                     <div>Prix ({props.totalItem} articles)</div>
-                    <div>{props.totalPrice}</div>
+                    <div>{props.totalPrice} FCFA</div>
                 </div>
                 <div className="flexRow sb" style={{margin: "10px 0"}}>
                     <div>Frais de Livraison</div>
@@ -21,7 +21,7 @@ const PriceDetails = (props) => {
                 </div>
                 <div className="flexRow sb" style={{margin: "10px 0"}}>
                     <div>Montant Total</div>
-                    <div>{props.totalPrice}</div>
+                    <div>{props.totalPrice} FCFA</div>
                 </div>
             </div>
         </Card>
