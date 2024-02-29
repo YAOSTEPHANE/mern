@@ -45,9 +45,9 @@ export const Products = (props) => {
     }
 
     dispatch(addProduct(form));
-
     setShow(false);
   }
+  
   const handleShow = () => setShow(true);
 
 

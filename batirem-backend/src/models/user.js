@@ -64,8 +64,8 @@ const userSchema = new mongoose.Schema({
 userSchema.methods = {
     authenticate: async function (password) {
         return await bcrypt.compare(password, this.hash_password);
-    }
-}
+    },
+};
 
 
 
