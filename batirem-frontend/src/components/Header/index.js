@@ -20,6 +20,9 @@ import { login, signout } from '../../actions';
 const Header = (props) => {
 
   const [loginModal, setLoginModal] = useState(false);
+  const [signup, setSignup] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const auth = useSelector(state => state.auth);
@@ -68,17 +71,24 @@ const Header = (props) => {
     return (
       <DropdownMenu
         menu={
-          <a className="loginButton" onClick={() => setLoginModal(true)}>
+          <a
+            className="loginButton"
+            onClick={() => {
+              setSignup(false);
+              setLoginModal(true);
+            }}
+          >
             Se Connecter
           </a>
         }
         menus={[
           { label: 'Mon profil', href: '', icon: null },
           { label: 'Batirem Plus Zone', href: '', icon: null },
-          { label: 'Commandes', href: `/account/orders`, icon: null, onClick: () => {
-            !auth.authenticate && setLoginModal(true);
+          {
+            label: 'Commandes', href: `/account/orders`, icon: null, onClick: () => {
+              !auth.authenticate && setLoginModal(true);
+            },
           },
-           },
           { label: 'Liste de souhaits', href: '', icon: null },
           { label: 'Récompenses', href: '', icon: null },
           { label: 'Cartes-cadeaux', href: '', icon: null },
@@ -86,7 +96,13 @@ const Header = (props) => {
         firstMenu={
           <div className="firstmenu">
             <span>Nouveau client?</span>
-            <a style={{ color: '#2874f0' }}>S’enregistrer</a>
+            <a 
+            onClick={() => {
+              alert(0);
+              setLoginModal(true);
+              setSignup(false);
+            }}
+            style={{ color: '#2874f0' }}>S’enregistrer</a>
           </div>
         }
       />
@@ -109,6 +125,22 @@ const Header = (props) => {
             <div className="rightspace">
 
               <div className="loginInputContainer">
+              {signup && (
+                <MaterialInput
+                type= "text"
+                label= "Entrer Prenoms"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                />
+              )}
+              {signup && (
+                <MaterialInput
+                type= "text"
+                label= "Entrer Noms"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                />
+              )}
                 <MaterialInput
                   type="text"
                   label="Entrer Email/Numero Telephone"

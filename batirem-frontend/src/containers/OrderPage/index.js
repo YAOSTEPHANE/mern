@@ -32,10 +32,12 @@ const OrderPage = (props) => {
                     ]}
                     breedIcon={<IoIosArrowForward />}
                 />
-                {user.orders.map((order, index) => {
-                    return order.items.map((item, index) => (
-                        <Card style={{ margin: "5px auto" }}>
-                            <div className="orderItemContainer" >
+                {user.orders.map((order) => {
+                    return order.items.map((item) => (
+                        <Card style={{ display: 'block', margin: "5px auto" }}>
+                            <Link 
+                            to={`/order_details/${order._id}`}
+                            className="orderItemContainer" >
                                 <div className="orderImgContainer">
                                     <img
                                         className="orderImg"
@@ -48,7 +50,7 @@ const OrderPage = (props) => {
                                     <div className="orderPrice">{item.payablePrice} FCFA</div>
                                     <div>{order.paymentStatus}</div>
                                 </div>
-                            </div>
+                            </Link>
                         </Card>
                     ));
                 })}
