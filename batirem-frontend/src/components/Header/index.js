@@ -10,7 +10,8 @@ import {
   DropdownMenu
 } from '../MaterialUI';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, signout } from '../../actions';
+import { login, signout, getCartItems, signup as _signup } from '../../actions';
+import Cart from "../UI/Cart";
 
 /**
 * @author
@@ -29,9 +30,29 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
 
+  const cart = useSelector((state) => state.cart);
+  
+  const userSignup = () => {
+    const user = { firstName, lastName, email, password };
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      email === "" ||
+      password === ""
+    ) {
+      return;
+    }
+
+    dispatch(_signup(user));
+  };
+
   const userLogin = () => {
-    dispatch(login({ email, password }));
-  }
+    if (signup) {
+      userSignup();
+    } else {
+      dispatch(login({ email, password }));
+    }
+  };
   const logout = () => {
     dispatch(signout());
   }
@@ -41,6 +62,10 @@ const Header = (props) => {
       setLoginModal(false)
     }
   }, [auth.authenticate]);
+
+  useEffect(() => {
+    dispatch(getCartItems());
+  }, [])
 
   const renderLoggedInMenu = () => {
     return (
@@ -100,9 +125,11 @@ const Header = (props) => {
             onClick={() => {
               alert(0);
               setLoginModal(true);
-              setSignup(false);
+              setSignup(true);
             }}
-            style={{ color: '#2874f0' }}>S’enregistrer</a>
+            style={{ color: '#2874f0' }}>
+            S’enregistrer
+            </a>
           </div>
         }
       />
@@ -156,7 +183,7 @@ const Header = (props) => {
                 //rightElement={<a href="#">Oublié ?</a>}
                 />
                 <MaterialButton
-                  title="Se Connecter"
+                  title={signup ? "S'enregistrer" : "Se Connecter"}
                   bgColor="#fb641b"
                   textColor="#ffffff"
                   style={{
@@ -238,8 +265,8 @@ const Header = (props) => {
           />
           <div>
             <a href={`/cart`} className="cart">
-              <IoIosCart />
-              <span style={{ margin: '0 10px' }}>Panier</span>
+              <Cart count={Object.keys(cart.cartItems).length} />
+              <span style={{ margin: "0 10px" }}>Panier</span>
             </a>
           </div>
         </div>

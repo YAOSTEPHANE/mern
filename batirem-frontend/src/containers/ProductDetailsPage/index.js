@@ -22,14 +22,14 @@ import { addToCart } from '../../actions';
 const ProductDetailsPage = (props) => {
 
   const dispatch = useDispatch();
-  const product = useSelector(state => state.product);
+  const product = useSelector((state) => state.product);
 
   useEffect(() => {
     const { productId } = props.match.params;
     console.log(props);
     const payload = {
       params: {
-        productId
+        productId,
       }
     }
     dispatch(getProductDetailsById(payload));
@@ -46,11 +46,11 @@ const ProductDetailsPage = (props) => {
         <div className="flexRow">
           <div className="verticalImageStack">
             {
-              product.productDetails.productPictures.map((thumb, index) => 
+              product.productDetails.productPictures.map((thumb, index) => (
               <div className="thumbnail">
                 <img src={generatePublicUrl(thumb.img)} alt={thumb.img} />
               </div>
-              )
+              ))
             }
             {/* <div className="thumbnail active">
               {
@@ -61,7 +61,8 @@ const ProductDetailsPage = (props) => {
           </div>
           <div className="productDescContainer">
             <div className="productDescImgContainer">
-              <img src={generatePublicUrl(product.productDetails.productPictures[0].img)} alt={`${product.productDetails.productPictures[0].img}`} />
+              <img src={generatePublicUrl(product.productDetails.productPictures[0].img)} 
+              alt={`${product.productDetails.productPictures[0].img}`} />
             </div>
 
             {/* action buttons */}

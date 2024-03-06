@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Layout from '../../components/Layout';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import Input from '../../components/UI/Input';
@@ -25,8 +25,16 @@ const Signup = (props) => {
     const auth = useSelector(state => state.auth);
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
-    
 
+    useEffect(() => {
+        if(!user.loading) {
+            setFirstName("");
+            setLastName("");
+            setEmail("");
+            setPassword("");
+        }
+    }, [user.loading]);
+    
 
     const userSignup = (e) => {
         e.preventDefault();
@@ -38,10 +46,10 @@ const Signup = (props) => {
 }
 
     if (auth.authenticate) {
-        return <Redirect to={`/`} />
+        return <Redirect to={`/`} />;
     }
     if(user.loading){
-    return <p>Loading...!</p>
+    return <p>Loading...!</p>;
     }
 
     return (

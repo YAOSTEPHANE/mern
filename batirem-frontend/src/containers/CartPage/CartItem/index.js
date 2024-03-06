@@ -51,8 +51,10 @@ export const CartItem = (props) => {
                     <input value={qty} readOnly />
                     <button onClick={onQuantityIncrement}>+</button>
                 </div>
-                <button className='cartActionBtn'>Sauvegarder</button>
-                <button className='cartActionBtn'>Supprimé</button>
+                <button 
+                className='cartActionBtn'
+                onClick={() => props.onRemoveCartItem(_id)}
+                >Supprimé</button>
             </div>
         </div> // Add closing curly brace here
     );

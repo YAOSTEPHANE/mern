@@ -19,7 +19,7 @@ export const getInitialData = () =>{
                     dispatch({
                         type: orderConstants.GET_CUSTOMER_ORDER_SUCCESS,
                         payload: { orders },
-                    })
+                    });
                     
                 }
                 console.log(res);

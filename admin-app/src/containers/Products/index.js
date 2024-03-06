@@ -4,7 +4,7 @@ import { Container, Row, Col, Table } from 'react-bootstrap';
 import Input from '../../components/UI/Input';
 import Modal from '../../components/UI/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct } from '../../actions';
+import { addProduct, deleteProductById } from '../../actions';
 import './style.css';
 import { generatePublicUrl } from '../../urlConfig';
 
@@ -33,6 +33,9 @@ export const Products = (props) => {
 
 
   const handleClose = () => {
+    setShow(false);
+  }
+  const submitProductForm = () => {
     const form = new FormData();
     form.append('name', name);
     form.append('quantity', quantity);
@@ -45,7 +48,6 @@ export const Products = (props) => {
     }
 
     dispatch(addProduct(form));
-    setShow(false);
   }
   
   const handleShow = () => setShow(true);
@@ -86,16 +88,26 @@ export const Products = (props) => {
         <tbody>
           {
             product.products.length > 0 ?
-              product.products.map((product) =>
-                <tr onClick={() => showProductDetailsModal(product)} key={product._id}>
+              product.products.map((product) =>(
+                <tr key={product._id}>
                   <td>2</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                   <td>{product.quantity}</td>
                   <td>{product.category.name}</td>
+                  <td>
+                    <button onClick={() => showProductDetailsModal(product)}>détails</button>
+                    <button onClick={() => {
+                      const payload = {
+                        productId: product._id,
+                      }
+                      dispatch(deleteProductById(payload));
+                    
+                    }}>supprimé</button>
+                  </td>
                 </tr>
-              ) : null
-          }
+              )) 
+              : null}
 
         </tbody>
       </Table>
@@ -104,8 +116,12 @@ export const Products = (props) => {
 
   const renderAddProductModal = () => {
     return (
-      <Modal show={show} handleClose={handleClose}
-        modalTitle={'Ajouter un nouveau Produit'} >
+      <Modal 
+      show={show} 
+      handleClose={handleClose}
+        modalTitle={'Ajouter un nouveau Produit'} 
+        onSubmit={submitProductForm}
+        >
         <Input
           label="Name"
           value={name}
@@ -146,7 +162,7 @@ export const Products = (props) => {
 
         {
           productPictures.length > 0 ?
-            productPictures.map((pic, index) => <div key={index}>{pic.name}</div>) : null
+            productPictures.map((pic, index) =>( <div key={index}>{pic.name}</div>)) : null
         }
 
         <input type="file" name="productPicture" onChange={handleProductPictures} />

@@ -26,13 +26,14 @@ const Modal = (props) => {
 
 const MaterialInput = (props) => {
     const [focus, setFocus] = useState(false);
+    const [touch, setTouch] = useState(false);
 
     return (
         <div className="materialInput">
             <label className={`label ${focus ? 'focus' : ''}`} style={{
                 top: 0,
-                lineHeight: 'none'
-            }}>{props.label}</label>
+                lineHeight: 'none',
+            }}>{props.label && `Entre ${props.label}`}</label>
             <div style={{
                 display: 'flex'
             }}>
@@ -42,35 +43,49 @@ const MaterialInput = (props) => {
                     onChange={props.onChange}
                     onFocus={(e) => {
                         setFocus(true);
+                        setTouch(true);
                     }}
                     onBlur={(e) => {
                         if (e.target.value === "") {
                             setFocus(false);
+                        }else{
+                            setTouch(false);
                         }
-                    }} />
+                    }} 
+
+                    />
                 {
                     props.rightElement ? props.rightElement : null
                 }
             </div>
+            {touch && (
+                <div 
+                style={{
+                    fontSize: '10px',
+                    color: "red",
+                    fontWeight: 500
+                }}>{`${props.label} est requis`}</div>
+            )}
+                
         </div>
     )
 }
 
 const MaterialButton = (props) => {
-
     const onClick = () => {
         props.onClick && props.onClick();
     }
     return (
         <div style={{
             width: '100%',
-            ...props.style
+            ...props.style,
         }}>
             <button
                 className="materialButton"
                 style={{
                     backgroundColor: props.bgColor,
-                    color: props.textColor
+                    color: props.textColor,
+                    fontSize: props.fontSize,
                 }}
                 onClick={onClick}
             >

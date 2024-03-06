@@ -6,7 +6,7 @@ const orderSchema = new mongoose.Schema({
     totalAmount: { type: Number, required: true },
     items: [
         {
-            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+            productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
             payablePrice: { type: Number, required: true },
             purchasedQty: { type: Number, required: true }
         }
@@ -23,21 +23,22 @@ const orderSchema = new mongoose.Schema({
     },
     orderStatus: [
         {
-        type: {
+            type: {
                 type: String,
                 enum: ["ordered", "packed", "shipped", "delivered"],
                 default: "ordered",
+            },
+            date: {
+                type: Date,
+            },
+            isCompleted: {
+                type: Boolean,
+                default: false,
+            },
         },
-    date: {
-        type: Date,
-    },
-    isCompleted: {
-        type: Boolean,
-        default: false,
-    },
+    ],
+
 },
-],
-    
-}, { timestamps: true });
+    { timestamps: true });
 
 module.exports = mongoose.model("Order", orderSchema);
